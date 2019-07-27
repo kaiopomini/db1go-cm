@@ -1,41 +1,26 @@
 package br.com.newbietrader.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
+import br.com.newbietrader.adapter.StockAdapter;
 import br.com.newbietrader.dto.StockDTO;
-import br.com.newbietrader.dto.StockValueDTO;
+import br.com.newbietrader.repository.StockRepository;
 
 @ApplicationScoped
 public class StockService {
 
-	private List<StockDTO> database = new ArrayList<>();
-
-	public StockService() {
-		
-		StockValueDTO valueDTO = new StockValueDTO();
-		valueDTO.setStart(BigDecimal.ONE);
-		valueDTO.setEnd(BigDecimal.TEN);
-		
-		StockDTO dto = new StockDTO();
-		
-		dto.setName("PETR4");
-		dto.setDate(LocalDate.now());
-		dto.setValue(valueDTO);
-		
-		database.add(dto);
-		database.add(dto);
-		database.add(dto);
-		database.add(dto);
-	}
-
+	@Inject
+	private StockRepository stockRepository;;
+	
 	public List<StockDTO> findAll() {
 		
-		return database;
+		return stockRepository.findAll().stream()
+				.map(StockAdapter::toDTO)
+				.collect(Collectors.toList());
 	}
 	
 	
