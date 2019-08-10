@@ -32,8 +32,13 @@ public class StockRepository {
 		return result;
 	}
 	
-	private MongoCollection<Stock>  getCollection() {
+	private MongoCollection<Stock> getCollection() {
 		return mongoClient.getDatabase("db1go").getCollection("stocks", Stock.class);
+	}
+
+	public void save(Stock stock) {
+		getCollection().insertOne(stock);
+		
 	}
 
 }

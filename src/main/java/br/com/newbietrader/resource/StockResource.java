@@ -3,6 +3,7 @@ package br.com.newbietrader.resource;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,6 +15,7 @@ import br.com.newbietrader.service.StockService;
 
 @Path("/stocks")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class StockResource {
 
 	@Inject
@@ -26,6 +28,6 @@ public class StockResource {
     
     @POST
     public void save(StockDTO dto) {
-    	
+    	stockService.save(dto);
     }
 }
